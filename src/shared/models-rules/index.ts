@@ -5,5 +5,10 @@ import { AppRequest } from '../models';
  * @returns {string}
  */
 export function getUserIdFromRequest(request: AppRequest): string {
-  return request.user && request.user.id;
+  return '123e4567-e89b-12d3-a456-426614174001'
 }
+
+export function getOrderIdFromRequest(request: AppRequest): string {
+  return '123e4567-e89b-12d3-a456-426614174009'
+}
+
