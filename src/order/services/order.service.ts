@@ -2,13 +2,22 @@ import { Injectable } from '@nestjs/common';
 import { v4 } from 'uuid';
 
 import { Order } from '../models';
+import {DatabaseService} from "../../database/database.service";
 
 @Injectable()
 export class OrderService {
-  private orders: Record<string, Order> = {}
+  constructor(
+      private readonly dbService: DatabaseService
+  ) {
+  }
+    private orders: Record<string, Order> = {}
 
-  findById(orderId: string): Order {
-    return this.orders[ orderId ];
+  async findById(orderId: string): Promise<Order> {
+    const result = await this.dbService.query(`SELECT *
+                                                   FROM orders
+                                                   WHERE id = $1 `,
+        [orderId],);
+    return result.rows[0]
   }
 
   create(data: any) {
